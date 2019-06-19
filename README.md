@@ -1,8 +1,4 @@
-# Computer Engineering
-
-Containerized Web Application on AWS EC2
-
-## Provision AWS EC2 VM with Ansible
+# Provision AWS EC2 VM with Ansible
 
 ## Step 1: Prep your machine
 
@@ -28,7 +24,7 @@ source $HOME/.ssh/aws_keypair_env.sh
 
 ## Step 2: Prepare Ansible playbook
 
-~~~
+~~~bash
 ├── ansible.cfg
 ├── inventory
 │   ├── base
@@ -54,14 +50,14 @@ source $HOME/.ssh/aws_keypair_env.sh
 
 Launch EC2 instance(s)
 
-~~~
+~~~bash
 cd $HOME/Documents/GitHub/Computer-Engineering/ansible
 ansible-playbook -v ec2_prov_playbook.yml
 ~~~
 
 Terminate EC2 instance(s)
 
-~~~
+~~~bash
 cd $HOME/Documents/GitHub/Computer-Engineering/ansible
 ansible-playbook -v ec2_term_playbook.yml
 ~~~
@@ -75,15 +71,17 @@ ansible-playbook -v ec2_term_playbook.yml
 
 ## Setup App
 
-~~~
-# Create a React App
+### Create a React App
+
+~~~bash
 npx create-react-app client
 cd client
 npm start
 ~~~
 
-~~~
-# Create a Express App
+### Create a Express App
+
+~~~bash
 mkdir myapp
 cd myapp
 npm init
