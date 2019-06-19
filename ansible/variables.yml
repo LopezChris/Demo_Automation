@@ -1,0 +1,9 @@
+---
+ec2_region: us-west-1
+ec2_instance_type: t2.micro
+ec2_image: ami-06397100adf427136
+ec2_keypair: jmedel-aws-iam
+ec2_volume_size: 8
+ec2_count: 1
+ec2_tag_Type: ec2hosts
+ec2_tag_Role: jmedel-ansible-cmpe
