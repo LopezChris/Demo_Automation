@@ -51,15 +51,23 @@ source $HOME/.ssh/aws_keypair_env.sh
 Launch EC2 instance(s)
 
 ~~~bash
-cd $HOME/Documents/GitHub/Computer-Engineering/ansible
+cd $HOME/Documents/GitHub/Demo_Automation/ansible
 ansible-playbook -v ec2_prov_playbook.yml
 ~~~
 
 Terminate EC2 instance(s)
 
 ~~~bash
-cd $HOME/Documents/GitHub/Computer-Engineering/ansible
+cd $HOME/Documents/GitHub/Demo_Automation/ansible
 ansible-playbook -v ec2_term_playbook.yml
+~~~
+
+## Step 4: SSH into EC2 Instance
+
+Since we are dealing with CentOS7 EC2 instance, the ec-user is centos.
+
+~~~bash
+ssh -i $HOME/.ssh/keypair.pem centos@<Public DNS (IPv4)>
 ~~~
 
 ## Further Reading
@@ -68,22 +76,3 @@ ansible-playbook -v ec2_term_playbook.yml
 - Ansible overview
 - Ansible aws_ec2 module
 - Regions and Availability Zones
-
-## Setup App
-
-### Create a React App
-
-~~~bash
-npx create-react-app client
-cd client
-npm start
-~~~
-
-### Create a Express App
-
-~~~bash
-mkdir myapp
-cd myapp
-npm init
-npm install express --save
-~~~
