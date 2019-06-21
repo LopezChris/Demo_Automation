@@ -1,0 +1,13 @@
+- name: Create a cloudformation stack
+  cloudformation:
+    stack_name: "csdv-cloudbreak"
+    state: present
+    region: "us-west-1"
+    disable_rollback: true
+    template_url: "https://s3.amazonaws.com/cbd-quickstart/cbd-quickstart-2.9.0.template"
+    template_parameters:
+      KeyName: "cfarnes"
+      DiskType: "ephemeral"
+      InstanceType: "m4.xlarge"
+    tags:
+      Stack: "csdv-cldbrk-automation"
