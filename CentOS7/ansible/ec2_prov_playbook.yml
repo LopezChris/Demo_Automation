@@ -12,9 +12,9 @@
         description: Demo security group
         region: "{{ ec2_region }}"
         rules: # rules for incoming connections to ec2
-          - proto: tcp
-            from_port: 22 # add port for ssh
-            to_port: 22
+          - proto: all
+            from_port: 0 # add port for ssh
+            to_port: 65535
             cidr_ip: 0.0.0.0/0
       register: security_group
     - name: Provision {{ ec2_count }} instance(s) with tag {{ ec2_tag_Role }}
