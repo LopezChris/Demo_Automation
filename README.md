@@ -25,16 +25,20 @@ source $HOME/.ssh/aws_keypair_env.sh
 ## Step 2: Prepare Ansible playbook
 
 ~~~bash
-├── ansible.cfg
-├── inventory
-│   ├── base
-│   ├── ec2.ini
-│   ├── ec2.py
-│   ├── static_hosts
-├── variables.yml
-├── ec2_prov_playbook.yml
-├── ec2_term_playbook.yml
+├── CentOS7/
+│   ├── ansible /
+│   │   ├── ansible.cfg
+│   │   ├── inventory/
+│   │   │   ├── base
+│   │   │   ├── ec2.ini
+│   │   │   ├── ec2.py
+│   │   │   ├── static_hosts
+│   │   ├── variables.yml
+│   │   ├── ec2_prov_playbook.yml
+│   │   ├── ec2_term_playbook.yml
 ~~~
+
+- **CentOS7** ansible project name, autonomate CentOS7 deployment on AWS EC2
 
 - **ansible.cfg** holds configuration info
 
