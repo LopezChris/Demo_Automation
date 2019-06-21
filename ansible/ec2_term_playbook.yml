@@ -8,23 +8,22 @@
   tasks:
     - name: Get EC2 instance IDs
       run_once: true
-      ec2_remote_facts:
+      ec2_instance_facts:
         filters:
-          "tag:Type": "{{ ec2_tag_Type }}"
           "tag:Role": "{{ ec2_tag_Role }}"
         region: "{{ ec2_region }}"
-      register: instances
+      register: ec2
 
-    - name: display instances
+    - name: display ec2 instances
       run_once: true
       debug:
-        var: instances    
+        var: ec2  
 
     - name: Remove registered instances
       run_once: true
       ec2:
         state: absent
         wait: true
-        instance_ids: "{{instances|json_query('instances[*].id')}}"
+        instance_ids: "{{ ec2|json_query('instances[*].instance_id') }}"
         region: "{{ ec2_region }}"
-      when: instances
+      when: ec2
