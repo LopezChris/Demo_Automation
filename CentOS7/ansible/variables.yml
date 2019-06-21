@@ -7,5 +7,4 @@ ec2_security_group: MC Demo - Policy
 ec2_volume_size: 8
 ec2_count: 1
 ec2_tag_Type: ec2hosts
-ec2_tag_Role: jmedel-ansible-cmpe 
 ec2_tag_Role: ansible-csdv
