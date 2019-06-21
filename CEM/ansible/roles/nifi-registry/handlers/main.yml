@@ -1,0 +1,16 @@
+---
+# handlers file for efm
+- name: start nifi-registry
+  service:
+    name: nifi-registry
+    state: started
+    enabled: yes
+
+- name: wait for nifi-registry to restart
+  local_action:
+    module: wait_for
+      host={{ inventory_hostname }}
+      port=18080
+      delay=10
+      timeout=60
+  become: false

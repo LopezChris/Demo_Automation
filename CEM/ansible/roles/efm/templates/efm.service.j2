@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Cloudera Edge Flow Manager
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=forking
+User=efm
+Group=cem
+ExecStart=/usr/cdf/cem/efm/current/bin/efm.sh start
+ExecStop=/usr/cdf/cem/efm/current/bin/efm.sh stop
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,74 @@
+---
+# tasks file for efm
+- name: create efm system group
+  group:
+    name: "{{ efm_group }}"
+    state: present
+  tags: [setup]
+
+- name: create efm system account
+  user:
+    name: efm
+    groups: cem
+    append: yes
+    system: yes
+    state: present
+  tags: [setup]
+
+- name: Create the base CEM directory
+  file:
+    path: /usr/cdf/cem/efm
+    owner: efm
+    group: cem
+    state: directory
+    mode: 0775
+
+- name: EFM install
+  unarchive:
+    src: http://downloads-hortonworks.akamaized.net/CEM/centos7/1.x/updates/1.0.0.0/tars/efm/efm-1.0.0.1.0.0.0-54-bin.tar.gz
+    dest: /usr/cdf/cem/efm
+    owner: efm
+    group: cem
+    remote_src: yes
+  notify:
+    - start efm
+
+- name: Create EFM Symlink
+  file:
+    src: /usr/cdf/cem/efm/efm-1.0.0.1.0.0.0-54
+    dest: /usr/cdf/cem/efm/current
+    owner: efm
+    group: cem
+    state: link
+
+- file:
+    path: /usr/cdf/cem/efm
+    owner: efm
+    group: cem
+    mode: 0775
+    recurse: yes
+
+- name: Add EFM Properties file
+  template: 
+    src: efm.properties.j2 
+    dest: /usr/cdf/cem/efm/current/conf/efm.properties
+    owner: root
+    group: root
+    mode: 0755
+  notify: 
+    - "start efm"
+
+- name: install systemd efm.service
+  template:
+    src: efm.service.j2
+    dest: /etc/systemd/system/efm.service
+    mode: 0644
+    backup: yes
+  when: efm_install_service|bool
+  tags: [conf,systemd]
+  notify:
+    - "start efm"
+
+- name: create efm bucket
+  command: /usr/cem/current/nifi-toolkit/bin/cli.sh registry create-bucket -u http://localhost:18080 --bucketName EFM
+  ignore_errors: yes

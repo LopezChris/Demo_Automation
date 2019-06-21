@@ -1,0 +1,54 @@
+---
+- name: Check if nifi registry has already been downloaded
+  stat: path=/usr/cdf/common/nifi-registry/nifi-registry-0.3.0
+  register: nifi_registry_dir
+
+- name: Download nifi-registry
+  unarchive:
+    src: http://mirrors.sonic.net/apache/nifi/nifi-registry/nifi-registry-0.3.0/nifi-registry-0.3.0-bin.tar.gz
+    dest: /usr/cdf/common/nifi-registry
+    owner: nifi-registry
+    group: cdf
+    remote_src: yes
+  when: not nifi_registry_dir.stat.exists
+  notify:
+    - start nifi-registry
+    - wait for nifi-registry to restart
+
+- file:
+    path: /usr/cdf/common/nifi-registry
+    owner: nifi-registry
+    group: cdf
+    mode: 0775
+    recurse: yes
+
+- name: Create NiFi Registry Symlink
+  file:
+    src: /usr/cdf/common/nifi-registry/nifi-registry-0.3.0
+    dest: /usr/cdf/common/nifi-registry/current
+    owner: nifi-registry
+    group: cdf
+    state: link
+
+- name: install systemd nifi-registry.service
+  template:
+    src: nifi-registry.service.j2
+    dest: /etc/systemd/system/nifi-registry.service
+    mode: 0644
+    backup: yes
+  when: nifi_registry_install_service|bool
+  notify:
+    - start nifi-registry
+    - wait for nifi-registry to restart
+  tags: [conf,systemd]
+
+- name: Add EFM Properties file
+  template: 
+    src: nifi-registry.properties.j2 
+    dest: /usr/cdf/common/nifi-registry/current/conf/nifi-registry.properties
+    owner: nifi-registry
+    group: cdf
+    mode: 0775
+  notify: 
+    - start nifi-registry
+    - wait for nifi-registry to restart
