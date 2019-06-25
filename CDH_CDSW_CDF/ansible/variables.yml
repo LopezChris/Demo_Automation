@@ -1,0 +1,11 @@
+ec2_region: us-west-1
+ec2_instance_type: m5d.4xlarge
+ec2_image: ami-074e2d6769f445be5 # centos7 ami id may need be updated
+ec2_keypair: jmedel-aws-iam
+ec2_keypair: jmedel-aws-iam # filename of keypair
+ec2_security_group: MC Demo - Policy
+ec2_volume_size_root: 8 # root volume 8GB for gp2 
+ec2_volume_size_ebs: 1000 # EBS 1000GB for General Purpose SSD (gp2)
+ec2_count: 1
+ec2_tag_Type: ec2hosts
+ec2_tag_Role: ansible-csdv
